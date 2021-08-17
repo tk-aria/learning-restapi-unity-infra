@@ -1,0 +1,16 @@
+{
+    "name": "document-template",
+    "image": "node:latest",
+    "postCreateCommand": "npm install",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "marp-team.marp-vscode",
+        "alanwalk.markdown-toc",
+        "christian-kohler.path-intellisense",
+        "editorconfig.editorconfig",
+        "znck.grammarly",
+        "ms-vsliveshare.vsliveshare"
+    ]
+}
