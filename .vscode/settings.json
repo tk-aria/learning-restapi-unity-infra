@@ -1,6 +1,7 @@
 {
-	"markdown.marp.exportType": "html",
+	"markdown.marp.exportType": "pdf",
 	"markdown.marp.themes": [
-		"./themes/test.css"
+		"./themes/test.css",
+        "./themes/uncover-custom.css"
 	]
 }
