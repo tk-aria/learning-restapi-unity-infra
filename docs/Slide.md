@@ -74,7 +74,8 @@ zip
 
 ***Kazuki Tanaka (twitter@tk_3118 github: tk-aria)***
 
-- フリーランスエンジニア(元Game、XRエンジニア)
+- フリーランスエンジニア
+  - ex) Infra, Multimedia, Game, XR Engineer
 - 基本的にエンタメの会社に出没する
 - FFIしやすい言語が好き
 - モノづくりが好きだが低めのレイヤーで遊んでることが多い
