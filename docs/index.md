@@ -16,11 +16,13 @@ headindDivider: 1
 
 ## 事前準備に関して
 
-- Unity2019.4.28f1
+- Unity2020.3.16f1
 - Git
 
+<!--
 - Docker
 - docker-compose
+-->
 
 ---
 ## プロジェクトダウンロードについて
@@ -567,7 +569,7 @@ C#5で追加されたasync/awaitが使えるようになり最近はこちらに
 C#で非同期を扱う本来の機能
 try/catchできたり
 Coroutine時代に存在した細かいとり回しのしづらさなどが
-解消さらていたりする。
+解消されていたりする。
 
 ---
 ### async/await
@@ -581,7 +583,8 @@ Coroutine時代に存在した細かいとり回しのしづらさなどが
 
 C#の標準TaskおよびTaskSchedulerを
 Unity向けに最適化して実装したC#のライブラリ
-拡張メソッドによって使いやすくなっていたり、同様にしてIEnumeratorをawaitできたりする
+拡張メソッドによって使いやすくなっていたり、
+同様にしてIEnumeratorをawaitできたりする
 使いやすいように様々なメソッドまで用意されていて
 Unityでasync/awaitするなら基本的に使用が推奨される
 ※ 各社で導入実績も多い(UniRxよりも使われているイメージ)
@@ -657,7 +660,7 @@ async UniTask<string> Request(string url)
 ```
 async void Start()
 {
-    var res = await Request("http;//localhost:8080");
+    var res = await Request("http://localhost:8080");
     Debug.Log($"response: {res}");
 }
 ```
@@ -749,7 +752,7 @@ _color: white
 ## まとめ
 
 - サーバ側のことも少しは知っておく
-- async/awaitを抑える
+- async/awaitを押さえる
 - Unityでhttp通信をする場合はUnityWebRequestを使う
 
 
