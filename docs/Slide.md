@@ -31,12 +31,12 @@ headindDivider: 1
 gitの方はこちら
 
 ```
-git clone ssh:git@github.com:tk-aria/vr-academy.git
+git clone git@github.com:tk-aria/vracademy-serverintegration.git
 ```
 
 ghqの方はこちら
 ```
-ghq get tk-aria/vr-academy
+ghq get tk-aria/vracademy-serverintegration
 ```
 
 それ以外の方はzipをdownloadします。
@@ -71,6 +71,7 @@ zip
 
 ## 自己紹介
 
+<!--![bg left:35% contain](https://www.goodfind.jp/common/img/space/detail/banner_pc_539.jpg)-->
 
 ***Kazuki Tanaka (twitter@tk_3118 github: tk-aria)***
 
@@ -173,9 +174,10 @@ etc...(様々なデータ)
 
 ---
 
-このほかにもサーバと連携すると
-ユーザーのログをとれたり、クラッシュを通知させたり
-他サービスと連携できたりする。
+このほかにもサーバと連携すると...
+- ユーザーログの取得
+- クラッシュ通知
+- 他サービスとの連携が可能
 
 => 運用面でも大きなアドバンテージになる
 
@@ -731,10 +733,11 @@ paginate: true
 
 - hello world
 - Textに表示する
+- ユーザーデータを送信する
 - textureのダウンロード
 - audioのダウンロード
-- エラーハンドリング
 - タイムアウト処理
+- エラーハンドリング
 - キャンセル処理
 
 ---
@@ -767,7 +770,10 @@ _color: white
 
 ## 著作権表記など
 
-※追記する
+- 効果音ラボ
+
+https://soundeffect-lab.info/sound/anime/mp3/fate1.mp3
+
 
 ---
 <!--
