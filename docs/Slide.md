@@ -16,15 +16,22 @@ headindDivider: 1
 
 ## 事前準備に関して
 
-- Unity2020.3.16f1
+- `Unity2020.3.16f1` のインストール
+
+これより新しい分には基本的に問題ありません
+2020.3よりも古い場合は一部機能が更新されているため
+ハンズオン内容と食い違う部分があります
+
+<!--
 - Git
+-->
 
 <!--
 - Docker
 - docker-compose
 -->
 
----
+<!---
 ## プロジェクトダウンロードについて
 
 gitの方はこちら
@@ -74,15 +81,38 @@ zip
 
 ***Kazuki Tanaka (twitter@tk_3118 github: tk-aria)***
 
-- フリーランスエンジニア
-  - ex) Infra, Multimedia, Game, XR Engineer
+- 傭兵 (フリーランスエンジニア)
+  - ex) Server, Infra, Multimedia, Game, XR Engineer
 - 基本的にエンタメの会社に出没する
 - FFIしやすい言語が好き
 - モノづくりが好きだが低めのレイヤーで遊んでることが多い
 
 ---
-## 目的
 
+## 略歴
+
+<!--![bg left:35% contain](https://www.goodfind.jp/common/img/space/detail/banner_pc_539.jpg)-->
+
+- **XRスタートアップ(技術検証・新規B向けアプリ開発)**
+- **大手スマホゲーム会社(長期タイトルの運用)**
+- **ライブ配信アプリ開発/SDK開発**
+- **通信事業社でSMS/RCSの配信システム開発**
+- 現在
+
+他には技術的なアドバイスや支援を色んな方にしてたりします.
+
+---
+## 本講義の目的
+
+
+**サーバに関して知る**
+**サーバと通信が行えるようになる**
+
+---
+## 本講義の目的
+
+実務レベルにスケールすると
+↓
 
 **サーバ担当者と連携してサーバ機能の組み込みが行えるようになる**
 
@@ -460,9 +490,13 @@ paginate: true
 
 # Unityでhttp通信を行う方法について
 
+
 ---
 ## プロジェクトの準備
 
+配布済みのunitypackageファイルをimportします
+
+<!--
 manifest.jsonに以下のモノを追加
 (今回使用する追加パッケージです)
 
@@ -473,6 +507,8 @@ manifest.jsonに以下のモノを追加
         ?path=src/UniTask/Assets/Plugins/UniTask#master",
         ...
 ```
+-->
+
 
 ---
 
@@ -595,6 +631,13 @@ Unityでasync/awaitするなら基本的に使用が推奨される
 
 ### UniTaskを導入する
 
+CysharpのGitHubリリースページから
+最新版の `unitypackage` をダウンロードする
+
+- https://github.com/Cysharp/UniTask/releases
+
+
+<!--
 様々な導入方法があるが今回はUPM経由で行う。
 manifest.jsonの依存パッケージに以下を追加。
 
@@ -603,8 +646,9 @@ manifest.jsonの依存パッケージに以下を追加。
     "com.tk-aria.unitask": "https://github.com/tk-aria/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#master",
     ...
 ```
+--->
 
----
+<!---
 
 以下のような’RunOnMainThread’というメソッドを追加している。
 
@@ -627,6 +671,7 @@ public static async UniTask RunOnMainThread(Action action, bool configureAwait =
     cancellationToken.ThrowIfCancellationRequested();
 }
 ```
+
 
 <!-- slide-memo
 
@@ -651,14 +696,6 @@ async UniTask<string> Request(string url)
     }
 }
 ```
-
----
-
-### サンプル
-
-- apple
-- grape
-- hoge
 
 ---
 ### サンプル
@@ -801,7 +838,7 @@ _backgroundColor: black
 _color: white
 -->
 
-# 御清聴ありがとうございました
+# 本日はおつかれさまでした
 
 <!---
 
