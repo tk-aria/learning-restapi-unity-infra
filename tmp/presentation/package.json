@@ -1,0 +1,23 @@
+{
+    "name": "document-template",
+    "version": "1.0.0",
+    "description": "document template about slide, specification, etc...",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "build": "md-to-pdf ./docs/*.md",
+        "lint": "textlint ./docs/*.md"
+    },
+    "devDependencies": {
+        "md-to-pdf": "^3.2.1",
+        "textlint": "^12.0.0",
+        "textlint-rule-preset-japanese": "^6.0.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com/tk-aria/document-template"
+    },
+    "author": "tk-aria",
+    "license": "MIT"
+}
