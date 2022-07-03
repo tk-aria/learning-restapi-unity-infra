@@ -1,0 +1,47 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+runtime: go115
+#service: iij-api-dev
+
+#instance_class: F4 # prod
+
+# ウォームアップリクエスト有効
+#inbound_services:
+#  - warmup
+
+# prod
+#automatic_scaling:
+#  max_concurrent_requests: 30 # デフォルト10 MAX:80 @ F4 で 最大50は処理できる（最大2000msになってしまうけど） @ F4 30位だと最大でも1000ms以下
+#  min_instances: 1 # 常設インスタンス 1
+#  min_idle_instances: 5 # 常設アイドルインスタンス 5
+
+#automatic_scaling:
+#  target_cpu_utilization: 0.65
+#  max_concurrent_requests: 30 # デフォルト10 MAX:80 @ F4 で 最大50は処理できる（最大2000msになってしまうけど） @ F4 30位だと最大でも1000ms以下
+#  min_instances: 1 # 常設インスタンス 1
+#  min_idle_instances: 5 # 常設アイドルインスタンス 5
+#  max_instances: 2147483647
+#  min_pending_latency: 30ms
+#  max_pending_latency: automatic
+
+# about instance_class().
+instance_class: B1 # dev
+
+# https://cloud.google.com/appengine/docs/standard/php7/config/appref?hl=ja#manual_scaling
+manual_scaling:
+  instances: 1
+
+includes:
+  - secret.yaml
