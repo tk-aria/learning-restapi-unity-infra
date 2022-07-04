@@ -1,4 +1,4 @@
 # learning-restapi-unity-infra
+infrastructure and backend for https://github.com/tk-aria/learning-restapi-unity
 
 [![Preview in vscode.dev](https://img.shields.io/badge/edit%20on-vscode.dev-blue)](https://vscode.dev/tk-aria/learning-restapi-unity-infra)
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/tk-aria/learning-restapi-unity-infra)
