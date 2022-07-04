@@ -10,6 +10,6 @@ kustomize 4.5.5
 kompose 1.26.1
 minikube 1.25.2
 kind 0.12.0
-kubectl 3.9.0
+kubectl 1.21.14
 helm 3.9.0
 helmfile 0.145.0
