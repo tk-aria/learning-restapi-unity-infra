@@ -6,13 +6,19 @@
         "doc": "docs"
     },
     "scripts": {
-        "build": "md-to-pdf ./docs/*.md",
-        "lint": "textlint ./docs/*.md"
+        "serve": "marp -p --server docs",
+        "build": "marp  docs/Slide.md -o archive/Slide.html",
+        "dev": "npm run build && open archive/Slide.html",
+        "lint": "textlint ./docs/*.md",
+        "pdf": "md-to-pdf ./docs/*.md"
     },
     "devDependencies": {
         "md-to-pdf": "^3.2.1",
         "textlint": "^12.0.0",
         "textlint-rule-preset-japanese": "^6.0.1"
+    },
+    "marp": {
+        "themeSet": "./themes"
     },
     "repository": {
         "type": "git",
