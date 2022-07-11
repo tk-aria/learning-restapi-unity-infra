@@ -1,0 +1,36 @@
+name: Ansible Lint # feel free to pick your own name
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Important: This sets up your GITHUB_WORKSPACE environment variable
+      - uses: actions/checkout@v2
+
+      - name: Run ansible-lint
+        # replace `main` with any valid ref, or tags like `v6`
+        uses: ansible-community/ansible-lint-action@main
+        # optional:
+        # with:
+        #   path: "playbooks/"  # <-- only one value is allowed
+
+---
+name: reviewdog
+on: [pull_request]
+jobs:
+  ansible-lint:
+    name: runner / ansible-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+      - name: ansible-lint
+        uses: reviewdog/action-ansiblelint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review # Change reporter.
+          ansiblelint_flags: '-x core playbook/*'
