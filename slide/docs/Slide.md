@@ -16,11 +16,13 @@ headindDivider: 1
 
 ## 事前準備に関して
 
-- `Unity2020.3.16f1` のインストール
+- `Unity2021.3.2f1` のインストール
 
 これより新しい分には基本的に問題ありません
-2020.3よりも古い場合は一部機能が更新されているため
+該当バージョンよりも古い場合は一部機能が更新されているため
 ハンズオン内容と食い違う部分があります
+
+※ 音声再生などをする為、会場の方はイヤホン持参推奨です。
 
 <!--
 - Git
@@ -97,7 +99,7 @@ zip
 - **大手スマホゲーム会社(長期タイトルの運用)**
 - **ライブ配信アプリ開発/SDK開発**
 - **通信事業社でSMS/RCSの配信システム開発**
-- 現在
+- 現在 => REALITY株式会社でサーバ/インフラ/unity/(native少々)
 
 他には技術的なアドバイスや支援を色んな方にしてたりします.
 
@@ -770,12 +772,13 @@ paginate: true
 
 # ハンズオン
 
+
 ---
 
 ## ハンズオンの内容
 
 - hello world
-- Textに表示する
+- UIと連携する
 - ユーザーデータを送信する
 - textureのダウンロード
 - audioのダウンロード
@@ -789,6 +792,272 @@ paginate: true
 ※Unityとエディタ画面を共有して進めていきます。
 
 ---
+## 接続先（サーバ）の設定
+
+`Utility.cs` の `HostName` を指定のurlへ書き換える
+
+```
+public static partial class Utility
+{
+    public const string HostName = /*ここを書き換える*/;
+}
+```
+
+---
+## hello world
+
+ここではまずはじめに、httpリクエストのレスポンスを
+コンソールログから確認してみます。
+
+---
+## hello world
+
+- `Example01.Scene` を開きます
+
+---
+## hello world
+
+Example01.csへ以下を実装します
+
+```
+async UniTask<string> Request(string url)
+{
+    using (var req = UnityWebRequest.Get(url))
+    {
+        await req.SendWebRequest();
+        Debug.Log($"{req.url} : {req.downloadHandler.text}");
+        return req.downloadHandler.text;
+    }
+}
+```
+
+---
+## hello world
+
+`ConsoleLog` で `hello world` の出力がされていれば成功です
+
+---
+## UIと連携する
+
+ここでは、UIイベントからhttpリクエストを発行し
+UIに出力するということをやってみます
+
+---
+## UIと連携する
+
+`Example02.Scene` を開きます
+
+---
+## UIと連携する
+
+scene用でobjectの設定を行います
+
+---
+## UIと連携する
+
+Example02.csへ以下を実装します
+※ 先程のExample01をベースに以下を追加するイメージになります
+
+```
+[SerializeField] private Text messageText;
+```
+
+```
+public async UniTaskVoid SendRequestAsync()
+    => messageText.text = await Request(Utility.HostName);
+```
+
+---
+## UIと連携する
+
+ボタンから発行するイベント関数を以下のように実装します
+
+```
+public void OnClickButton()
+    => SendRequestAsync().Forget();
+```
+
+---
+## UIと連携する
+
+ボタンを押してText文字が `helloworld` になっていたら成功です
+
+---
+## ユーザーデータを送信する
+
+POSTを使用した通信を行います。
+今まではデータを取得することを行ってきましたが、
+POSTを使用することでサーバにデータを送信することが出来るようになります
+
+ここでは、ユーザーデータをサーバに送ってみます
+
+---
+## ユーザーデータを送信する
+
+`Example03.Scene` を開きます
+
+---
+## ユーザーデータを送信する
+
+- ユーザーデータの送信処理
+
+```
+private async UniTask<User> Request(string url, User user)
+{
+    var json = JsonUtility.ToJson(user);
+    var payload = Encoding.UTF8.GetBytes(json);
+
+    using (var req = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST, new DownloadHandlerBuffer(), new UploadHandlerRaw(payload)))
+    {
+        req.SetRequestHeader("Content-Type", "application/json");
+        await req.SendWebRequest();
+        Debug.Log($"{req.url} : {req.downloadHandler.text}");
+        return JsonUtility.FromJson<User>(req.downloadHandler.text);
+    }
+}
+```
+
+---
+## ユーザーデータを送信する
+
+- ユーザーデータの送信処理
+
+```
+public async UniTaskVoid SendRequestAsync()
+{
+    var user = await Request($"{Utility.HostName}/user/create",
+        new User {
+            name = nameField.text,
+            email = mailField.text
+        });
+    Debug.Log($"response => name:{user.name}, email:{user.email}");
+}
+```
+
+---
+## ユーザーデータを送信する
+
+- UI連携部分とイベント関数
+
+```
+[SerializeField] InputField nameField;
+[SerializeField] InputField mailField;
+
+public void OnEnterInputForm()
+    => SendRequestAsync().Forget();
+```
+
+---
+## ユーザーデータを送信する
+
+`ConsoleLog` で `hello world` の出力がされていれば成功です
+
+---
+## textureのダウンロード
+
+ここでは、http通信を用いてテクスチャを取り扱う方法を実践します。
+ダウンロードしてきたTextureをCubeに貼り付けていきます。
+
+---
+## textureのダウンロード
+
+`Example04.Scene` を開きます
+
+---
+## textureのダウンロード
+
+```
+[SerializeField] private Material material;
+
+private async UniTaskVoid SendRequestAsync()
+    => material.mainTexture = await Request(Utility.HostName + "/asset/icon.png");
+
+async UniTask<Texture> Request(string url)
+{
+    using (var req = UnityWebRequestTexture.GetTexture(url))
+    {
+        await req.SendWebRequest();
+        Debug.Log($"completed => {req.url}");
+        return DownloadHandlerTexture.GetContent(req);
+    }
+}
+```
+
+---
+## textureのダウンロード
+
+リクエストの発行に関しては、これまでの方法を使って呼び出しましょう。
+リクエストを送信して `Cube` の `Texture` が変更されていれば成功です
+
+---
+## audioのダウンロード
+
+ここでは、http通信を用いて音声データを取り扱う方法を実践します。
+ダウンロードしてきたWavファイルを再生する処理を行なっていきます。
+
+---
+## audioのダウンロード
+
+`Example05.Scene` を開きます
+
+---
+## audioのダウンロード
+
+- `SerializeField`
+
+```
+[SerializeField] private AudioSource audioSource;
+[SerializeField] private string assetName = "sample.wav";
+```
+
+---
+## audioのダウンロード
+
+- Wavのダウンロード処理
+
+```
+private async UniTask<AudioClip> Request(string url)
+{
+    using (var req = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV))
+    {
+        await req.SendWebRequest().ToUniTask();
+        return DownloadHandlerAudioClip.GetContent(req);
+    }
+}
+```
+
+---
+## audioのダウンロード
+
+- Wavのダウンロード処理
+
+```
+async UniTaskVoid SendRequestAsync()
+{
+    var res = await Request($"{Utility.HostName}/asset/{assetName}");
+    if (audioSource.isPlaying)
+    {
+        audioSource.Stop();
+    }
+    audioSource.clip = res;
+    audioSource.Play();
+}
+```
+
+---
+## audioのダウンロード
+
+リクエストの発行に関しては、これまでの方法を使って呼び出しましょう。
+リクエストを送信して `AudioSource` を通じて 音声の再生が行われていれば成功です
+
+---
+## さらに進んだ先
+
+- タイムアウト処理
+- エラーハンドリング
+- キャンセル処理
+
+---
 <!--
 _backgroundColor: black
 _color: white
@@ -798,10 +1067,12 @@ _color: white
 
 ## まとめ
 
-- サーバ側のことも少しは知っておく
+unityでhttp通信する方法に手法に関してお話ししました
+
 - async/awaitを押さえる
 - Unityでhttp通信をする場合はUnityWebRequestを使う
-
+- UniTaskはunity上でasync/awaitを使いやすくしたライブラリ
+- サーバ側のことも知っておくといいことがある
 
 - (おまけ)<!--ソフトウェアレイヤーになると-->使用するプロトコルによって実装手法が変わるので都度調べる必要がある。
 
