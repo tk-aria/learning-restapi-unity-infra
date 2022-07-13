@@ -568,6 +568,8 @@ Webサーバの一種
 基本的にGETとPOSTしか使わないケースがほとんど
 プロジェクトによってはPOSTのみもあったりする。
 
+サーバとやり取りする上でのデータ形式としてJSONを用いるのが一般的です。(後述します)
+
 ---
 
 Unityでhttp通信する最も一般的な手法として
@@ -952,7 +954,17 @@ public void OnEnterInputForm()
 ---
 ## ユーザーデータを送信する
 
+`補足:JSONについて`
+
+- https://ja.wikipedia.org/wiki/JavaScript_Object_Notation
+
+---
+## ユーザーデータを送信する
+
 `ConsoleLog` で `hello world` の出力がされていれば成功です
+
+
+また `/users` にアクセスすることで、登録ユーザーを確認することができます。
 
 ---
 ## textureのダウンロード
@@ -972,7 +984,7 @@ public void OnEnterInputForm()
 [SerializeField] private Material material;
 
 private async UniTaskVoid SendRequestAsync()
-    => material.mainTexture = await Request(Utility.HostName + "/asset/icon.png");
+    => material.mainTexture = await Request($"{Utility.HostName}/asset/icon.png");
 
 async UniTask<Texture> Request(string url)
 {
